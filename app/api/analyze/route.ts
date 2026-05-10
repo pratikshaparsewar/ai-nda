@@ -100,48 +100,74 @@ export async function POST(request: NextRequest) {
       return Response.json({ success: true, analysis })
     }
 
-    // ── Supabase mode ────────────────────────────────────────────────────────
-    const { data: existing } = await supabase
-      .from('analyses')
-      .select('*')
-      .eq('document_id', documentId)
-      .maybeSingle()
+    // ── Supabase mode (falls back to in-memory on infra errors) ─────────────
+    try {
+      const { data: existing } = await supabase
+        .from('analyses')
+        .select('*')
+        .eq('document_id', documentId)
+        .maybeSingle()
 
-    if (existing) return Response.json({ success: true, analysis: existing })
+      if (existing) return Response.json({ success: true, analysis: existing })
 
-    const { data: doc, error: docError } = await supabase
-      .from('documents')
-      .select('filename, full_text')
-      .eq('id', documentId)
-      .single()
+      const { data: doc, error: docError } = await supabase
+        .from('documents')
+        .select('filename, full_text')
+        .eq('id', documentId)
+        .single()
 
-    if (docError || !doc) {
-      return Response.json({ success: false, error: 'Document not found' }, { status: 404 })
+      if (docError || !doc) throw new Error('not_found')
+
+      const result = await runAnalysis(doc.full_text)
+
+      const { data: analysis, error: saveError } = await supabase
+        .from('analyses')
+        .insert({
+          document_id: documentId,
+          decision: result.decision,
+          risk_score: result.risk_score,
+          risk_level: result.risk_level,
+          summary: result.summary,
+          red_flags: result.red_flags ?? [],
+          consequences: result.consequences ?? [],
+          negotiation_advice: result.negotiation_advice ?? [],
+          questions_to_ask: result.questions_to_ask ?? [],
+        })
+        .select('*')
+        .single()
+
+      if (saveError || !analysis) throw new Error('save_failed')
+
+      return Response.json({ success: true, analysis })
+    } catch (supabaseErr) {
+      if (supabaseErr instanceof Error && supabaseErr.message === 'not_found') {
+        // Fall back to in-memory store — document was saved there when Supabase was down
+        const cached = memStore.getAnalysis(documentId)
+        if (cached) return Response.json({ success: true, analysis: cached })
+
+        const doc = memStore.getDocument(documentId)
+        if (!doc) {
+          return Response.json({ success: false, error: 'Document not found. Please re-upload.' }, { status: 404 })
+        }
+
+        const result = await runAnalysis(doc.text)
+        const analysis = memStore.saveAnalysis({ document_id: documentId, ...result })
+        return Response.json({ success: true, analysis })
+      }
+
+      console.warn('[analyze] Supabase unavailable, using in-memory:', supabaseErr)
+      const cached = memStore.getAnalysis(documentId)
+      if (cached) return Response.json({ success: true, analysis: cached })
+
+      const doc = memStore.getDocument(documentId)
+      if (!doc) {
+        return Response.json({ success: false, error: 'Document not found. Please re-upload.' }, { status: 404 })
+      }
+
+      const result = await runAnalysis(doc.text)
+      const analysis = memStore.saveAnalysis({ document_id: documentId, ...result })
+      return Response.json({ success: true, analysis })
     }
-
-    const result = await runAnalysis(doc.full_text)
-
-    const { data: analysis, error: saveError } = await supabase
-      .from('analyses')
-      .insert({
-        document_id: documentId,
-        decision: result.decision,
-        risk_score: result.risk_score,
-        risk_level: result.risk_level,
-        summary: result.summary,
-        red_flags: result.red_flags ?? [],
-        consequences: result.consequences ?? [],
-        negotiation_advice: result.negotiation_advice ?? [],
-        questions_to_ask: result.questions_to_ask ?? [],
-      })
-      .select('*')
-      .single()
-
-    if (saveError || !analysis) {
-      return Response.json({ success: false, error: 'Failed to save analysis' }, { status: 500 })
-    }
-
-    return Response.json({ success: true, analysis })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unexpected error'
     console.error('[analyze]', err)

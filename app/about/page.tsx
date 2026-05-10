@@ -87,11 +87,11 @@ export default function AboutPage() {
           {/* Mission */}
           <FadeIn>
             <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-8 sm:p-10 flex flex-col gap-6">
-              <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400">Mission</span>
+              <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500">Mission</span>
               <p className="text-xl sm:text-2xl font-semibold text-zinc-700 dark:text-zinc-200 leading-relaxed">
                 Legal clarity is a right, not a luxury. We exist to remove the information asymmetry between the people who draft contracts and the people who sign them.
               </p>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 34.75 million small businesses in the U.S. operate without legal counsel. Millions of freelancers, students, and early-career professionals sign agreements they don&apos;t fully understand every single day. The consequences range from lost IP to multi-year non-compete restrictions to forfeited compensation. Should I Sign This? exists to close that gap.
               </p>
             </div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
             <FadeIn>
               <div className="flex flex-col gap-2">
                 <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-zinc-50">We augment lawyers. We don&apos;t replace them.</h2>
-                <p className="text-zinc-500 text-sm max-w-xl">
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-xl">
                   AI can find patterns and surface risk faster than any human. But legal judgment, negotiation strategy, and jurisdiction-specific knowledge require a real attorney.
                 </p>
               </div>
@@ -131,7 +131,7 @@ export default function AboutPage() {
             <FadeIn>
               <div className="flex flex-col gap-2">
                 <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-zinc-50">How we think about it</h2>
-                <p className="text-zinc-500 text-sm">Four principles that guide every product decision.</p>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm">Four principles that guide every product decision.</p>
               </div>
             </FadeIn>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -143,7 +143,7 @@ export default function AboutPage() {
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-100">{p.title}</h3>
-                      <p className="text-xs text-zinc-500 leading-relaxed">{p.desc}</p>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{p.desc}</p>
                     </div>
                   </div>
                 </FadeIn>
@@ -155,7 +155,7 @@ export default function AboutPage() {
           <FadeIn>
             <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-7 flex flex-col gap-4">
               <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-200">Built in the open</h3>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Should I Sign This? is a full-stack Next.js application built on the App Router with Supabase Postgres, pgvector for semantic search, LangChain for document processing, and GPT-4o for analysis. Designed to be deployed on Vercel in under five minutes.
               </p>
               <div className="flex flex-wrap gap-2">

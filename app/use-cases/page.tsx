@@ -111,7 +111,7 @@ export default function UseCasesPage() {
                       <p className="text-sm font-semibold text-zinc-600 dark:text-zinc-300">{uc.headline}</p>
                     </div>
                   </div>
-                  <p className="text-sm text-zinc-500 leading-relaxed">{uc.desc}</p>
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{uc.desc}</p>
                   <div className="flex flex-wrap gap-2">
                     {uc.tags.map(tag => (
                       <span key={tag} className="rounded-full border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/80 px-3 py-1 text-xs text-zinc-500">

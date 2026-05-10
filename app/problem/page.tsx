@@ -92,7 +92,7 @@ export default function ProblemPage() {
                   <div className={`relative text-4xl sm:text-5xl font-black tabular-nums tracking-tight ${s.text}`}>{s.number}</div>
                   <div className="relative flex flex-col gap-1">
                     <p className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">{s.label}</p>
-                    <p className="text-xs text-zinc-500 leading-relaxed">{s.sub}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{s.sub}</p>
                   </div>
                 </div>
               </FadeIn>
@@ -113,7 +113,7 @@ export default function ProblemPage() {
             <FadeIn>
               <div className="flex flex-col gap-2 mb-2">
                 <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-zinc-50">Why this keeps happening</h2>
-                <p className="text-zinc-500 text-sm">Four structural reasons people sign what they shouldn&apos;t.</p>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm">Four structural reasons people sign what they shouldn&apos;t.</p>
               </div>
             </FadeIn>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -125,7 +125,7 @@ export default function ProblemPage() {
                     </div>
                     <div className="flex flex-col gap-2">
                       <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-100">{p.title}</h3>
-                      <p className="text-sm text-zinc-500 leading-relaxed">{p.desc}</p>
+                      <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{p.desc}</p>
                     </div>
                   </div>
                 </FadeIn>

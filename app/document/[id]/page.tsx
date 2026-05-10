@@ -73,7 +73,7 @@ function LoadingState() {
         </div>
         <div className="flex flex-col items-center gap-2 text-center">
           <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Analyzing contract…</h2>
-          <p className="text-sm text-zinc-500">This takes about 15–30 seconds</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">This takes about 15–30 seconds</p>
         </div>
         <ul className="w-full flex flex-col gap-2.5">
           {STEPS.map((s, i) => (
@@ -103,12 +103,12 @@ function OverviewTab({ analysis }: { analysis: Analysis }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 flex flex-col gap-3">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Plain-English Summary</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">Plain-English Summary</h3>
         <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed text-sm whitespace-pre-line">{analysis.summary}</p>
       </div>
 
       <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 flex flex-col gap-4">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 flex items-center gap-2">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-amber-500"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           Potential Consequences
         </h3>
@@ -129,7 +129,7 @@ function RedFlagsTab({ analysis }: { analysis: Analysis }) {
   if (!analysis.red_flags.length) {
     return (
       <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-10 text-center">
-        <p className="text-zinc-500 text-sm">No red flags identified.</p>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm">No red flags identified.</p>
       </div>
     );
   }
@@ -154,7 +154,7 @@ function RedFlagsTab({ analysis }: { analysis: Analysis }) {
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">{flag.description}</p>
             {flag.evidence && (
               <blockquote className="rounded-xl border-l-2 border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/80 px-4 py-3">
-                <p className="text-xs text-zinc-500 font-medium mb-1.5 uppercase tracking-wider">Evidence</p>
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mb-1.5 uppercase tracking-wider">Evidence</p>
                 <p className="text-sm text-zinc-700 dark:text-zinc-300 italic leading-relaxed">"{flag.evidence}"</p>
               </blockquote>
             )}
@@ -169,7 +169,7 @@ function NegotiationTab({ analysis }: { analysis: Analysis }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 flex flex-col gap-4">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 flex items-center gap-2">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-violet-500 dark:text-violet-400"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
           Negotiation Advice
         </h3>
@@ -186,7 +186,7 @@ function NegotiationTab({ analysis }: { analysis: Analysis }) {
       </div>
 
       <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 flex flex-col gap-4">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 flex items-center gap-2">
+        <h3 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 dark:text-blue-400"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Questions to Ask
         </h3>
@@ -247,7 +247,7 @@ function ChatTab({ documentId }: { documentId: string }) {
       {/* Suggested prompts */}
       {messages.length === 0 && (
         <div className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-5 flex flex-col gap-3">
-          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Suggested questions</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">Suggested questions</p>
           <div className="flex flex-wrap gap-2">
             {[
               "What is the confidentiality period?",
@@ -284,7 +284,7 @@ function ChatTab({ documentId }: { documentId: string }) {
                 <p className="text-[10px] uppercase tracking-widest text-zinc-500 dark:text-zinc-600 font-semibold px-1">Source clauses</p>
                 {m.sources.map((src, j) => (
                   <blockquote key={j} className="rounded-xl border-l-2 border-zinc-200 dark:border-zinc-700 bg-zinc-50/80 dark:bg-zinc-900/60 px-3 py-2">
-                    <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">{src}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed line-clamp-3">{src}</p>
                   </blockquote>
                 ))}
               </div>
@@ -362,7 +362,7 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-red-500 dark:text-red-400"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
           </div>
           <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">Analysis failed</h2>
-          <p className="text-sm text-zinc-500">{error}</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">{error}</p>
           <Link href="/upload" className="rounded-xl bg-violet-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-violet-500 transition-colors">
             Try again
           </Link>
@@ -418,7 +418,7 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
                 AI Verdict
               </span>
               {criticalCount > 0 && (
-                <span className="text-xs text-zinc-500">{criticalCount} high-risk clause{criticalCount !== 1 ? "s" : ""}</span>
+                <span className="text-xs text-zinc-500 dark:text-zinc-400">{criticalCount} high-risk clause{criticalCount !== 1 ? "s" : ""}</span>
               )}
             </div>
 
@@ -436,14 +436,14 @@ export default function DocumentPage({ params }: { params: Promise<{ id: string 
                 <span className="text-sm text-zinc-500 dark:text-zinc-400">Risk Score</span>
                 <div className="flex items-baseline gap-1">
                   <span className={`text-4xl font-black tabular-nums leading-none ${cfg.text}`}>{analysis.risk_score}</span>
-                  <span className="text-sm text-zinc-400 dark:text-zinc-600">/100</span>
+                  <span className="text-sm text-zinc-400 dark:text-zinc-500">/100</span>
                   <span className={`ml-2 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${cfg.badge}`}>{analysis.risk_level}</span>
                 </div>
               </div>
               <div className="h-2 w-full rounded-full bg-zinc-200/60 dark:bg-white/5 overflow-hidden">
                 <div className={`h-full rounded-full bg-gradient-to-r transition-all ${cfg.bar}`} style={{ width: `${analysis.risk_score}%` }} />
               </div>
-              <div className="flex justify-between text-[11px] text-zinc-400 dark:text-zinc-700">
+              <div className="flex justify-between text-[11px] text-zinc-400 dark:text-zinc-500">
                 <span>Low risk</span>
                 <span>High risk</span>
               </div>

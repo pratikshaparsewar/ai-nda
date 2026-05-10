@@ -197,7 +197,7 @@ export default function Home() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
-                className="flex flex-wrap items-center justify-center lg:justify-start gap-5 text-xs text-zinc-400 dark:text-zinc-600"
+                className="flex flex-wrap items-center justify-center lg:justify-start gap-5 text-xs text-zinc-400 dark:text-zinc-500"
               >
                 {["GPT-4o", "pgvector RAG", "No login required", "Free forever"].map(t => (
                   <span key={t} className="flex items-center gap-1.5">
@@ -228,7 +228,7 @@ export default function Home() {
                 {STATS.map(s => (
                   <div key={s.number} className="rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 text-center flex flex-col gap-2 hover:border-zinc-300 dark:hover:border-white/10 transition-colors">
                     <span className={`text-4xl sm:text-5xl font-black tabular-nums tracking-tight ${s.color}`}>{s.number}</span>
-                    <p className="text-xs text-zinc-500 leading-relaxed">{s.label}</p>
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -250,7 +250,7 @@ export default function Home() {
                   they don&apos;t understand.
                 </span>
               </h2>
-              <p className="text-zinc-500 max-w-xl mx-auto text-sm leading-relaxed">
+              <p className="text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
                 Founders, freelancers, and small businesses sign agreements every day without realizing the hidden risks — because legal language is designed to be opaque.
               </p>
             </FadeIn>
@@ -266,7 +266,7 @@ export default function Home() {
                     <span className="text-2xl flex-shrink-0 mt-0.5">{p.emoji}</span>
                     <div>
                       <h3 className="text-sm font-bold text-zinc-800 dark:text-zinc-100 mb-1">{p.title}</h3>
-                      <p className="text-xs text-zinc-500 leading-relaxed">{p.desc}</p>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{p.desc}</p>
                     </div>
                   </motion.div>
                 </FadeIn>
@@ -328,7 +328,7 @@ export default function Home() {
           <div className="mx-auto max-w-4xl flex flex-col gap-10">
             <FadeIn className="text-center flex flex-col gap-3">
               <h2 className="text-3xl sm:text-4xl font-black text-zinc-900 dark:text-zinc-50">Everything in one verdict.</h2>
-              <p className="text-zinc-500 text-sm max-w-md mx-auto">No back-and-forth. No account. One upload, one complete analysis.</p>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm max-w-md mx-auto">No back-and-forth. No account. One upload, one complete analysis.</p>
             </FadeIn>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -343,7 +343,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-col gap-1">
                       <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{f.title}</h3>
-                      <p className="text-xs text-zinc-500 leading-relaxed">{f.desc}</p>
+                      <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">{f.desc}</p>
                     </div>
                   </motion.div>
                 </FadeIn>

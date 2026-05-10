@@ -92,7 +92,7 @@ export default function HowItWorksPage() {
               <FadeIn key={step.title} delay={i * 0.08}>
                 <div className="relative flex gap-5 pb-10 last:pb-0">
                   <div className="relative flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-full bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 z-10">
-                    <span className="text-xs font-bold text-zinc-500">{i + 1}</span>
+                    <span className="text-xs font-bold text-zinc-500 dark:text-zinc-400">{i + 1}</span>
                   </div>
                   <div className="flex-1 rounded-2xl border border-zinc-200 dark:border-white/[0.06] bg-white dark:bg-white/[0.02] p-6 flex flex-col gap-4 hover:border-zinc-300 dark:hover:border-white/[0.09] transition-colors">
                     <div className="flex items-start justify-between gap-4">
@@ -106,7 +106,7 @@ export default function HowItWorksPage() {
                         {step.tag}
                       </span>
                     </div>
-                    <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">{step.desc}</p>
                   </div>
                 </div>
               </FadeIn>
@@ -118,7 +118,7 @@ export default function HowItWorksPage() {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <h2 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-zinc-50">Tech stack</h2>
-                <p className="text-zinc-500 text-sm">Built for production from day one.</p>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm">Built for production from day one.</p>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {TECH.map(t => (

@@ -43,50 +43,54 @@ export async function POST(request: NextRequest) {
       return Response.json({ success: true, documentId: doc.id })
     }
 
-    // ── Full Supabase mode ───────────────────────────────────────────────────
-    const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
-    const storagePath = `contracts/${Date.now()}-${safeName}`
+    // ── Full Supabase mode (falls back to in-memory on any infra error) ───────
+    try {
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_')
+      const storagePath = `contracts/${Date.now()}-${safeName}`
 
-    await supabase.storage.createBucket('contracts', { public: false }).catch(() => {})
+      await supabase.storage.createBucket('contracts', { public: false }).catch(() => {})
 
-    const { error: uploadError } = await supabase.storage
-      .from('contracts')
-      .upload(storagePath, buffer, { contentType: 'application/pdf' })
+      const { error: uploadError } = await supabase.storage
+        .from('contracts')
+        .upload(storagePath, buffer, { contentType: 'application/pdf' })
 
-    if (uploadError) {
-      return Response.json({ success: false, error: 'Storage upload failed: ' + uploadError.message }, { status: 500 })
+      if (uploadError) throw new Error('Storage: ' + uploadError.message)
+
+      const { data: savedDoc, error: docError } = await supabase
+        .from('documents')
+        .insert({ filename: file.name, storage_path: storagePath, full_text: text })
+        .select('id')
+        .single()
+
+      if (docError || !savedDoc) throw new Error('DB: ' + (docError?.message ?? 'unknown'))
+
+      const embeddingRes = await openai.embeddings.create({
+        model: 'text-embedding-3-small',
+        input: chunks,
+      })
+      const embeddings = embeddingRes.data.map(e => e.embedding)
+
+      const { error: chunksError } = await supabase.from('document_chunks').insert(
+        chunks.map((chunk, i) => ({
+          document_id: savedDoc.id,
+          chunk_index: i,
+          content: chunk,
+          embedding: embeddings[i],
+        }))
+      )
+
+      if (!chunksError) {
+        await supabase.from('documents').update({ chunk_count: chunks.length }).eq('id', savedDoc.id)
+      }
+
+      return Response.json({ success: true, documentId: savedDoc.id })
+    } catch (supabaseErr) {
+      // Supabase unavailable (paused project, bad gateway, wrong credentials) —
+      // fall back to in-memory so the app stays functional
+      console.warn('[upload] Supabase unavailable, falling back to in-memory:', supabaseErr)
+      const doc = memStore.saveDocument({ filename: file.name, text, chunks })
+      return Response.json({ success: true, documentId: doc.id })
     }
-
-    const { data: savedDoc, error: docError } = await supabase
-      .from('documents')
-      .insert({ filename: file.name, storage_path: storagePath, full_text: text })
-      .select('id')
-      .single()
-
-    if (docError || !savedDoc) {
-      return Response.json({ success: false, error: 'Failed to save document: ' + (docError?.message ?? 'unknown') }, { status: 500 })
-    }
-
-    const embeddingRes = await openai.embeddings.create({
-      model: 'text-embedding-3-small',
-      input: chunks,
-    })
-    const embeddings = embeddingRes.data.map(e => e.embedding)
-
-    const { error: chunksError } = await supabase.from('document_chunks').insert(
-      chunks.map((chunk, i) => ({
-        document_id: savedDoc.id,
-        chunk_index: i,
-        content: chunk,
-        embedding: embeddings[i],
-      }))
-    )
-
-    if (!chunksError) {
-      await supabase.from('documents').update({ chunk_count: chunks.length }).eq('id', savedDoc.id)
-    }
-
-    return Response.json({ success: true, documentId: savedDoc.id })
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unexpected error'
     console.error('[upload]', err)

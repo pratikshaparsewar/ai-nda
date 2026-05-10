@@ -52,7 +52,7 @@ export default function UploadPage() {
             Back
           </Link>
           <h1 className="text-3xl font-black tracking-tight text-zinc-900 dark:text-zinc-50">Upload your contract</h1>
-          <p className="text-zinc-500 text-sm">PDF only · Never stored permanently · Analyzed in seconds</p>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm">PDF only · Never stored permanently · Analyzed in seconds</p>
         </div>
 
         <button
@@ -77,9 +77,9 @@ export default function UploadPage() {
               </div>
               <div>
                 <p className="font-semibold text-zinc-800 dark:text-zinc-100">{file.name}</p>
-                <p className="text-sm text-zinc-500 mt-0.5">{(file.size / 1024).toFixed(1)} KB · PDF</p>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">{(file.size / 1024).toFixed(1)} KB · PDF</p>
               </div>
-              <span className="text-xs text-zinc-400 border border-zinc-200 dark:border-zinc-800 rounded-full px-3 py-1">Click to replace</span>
+              <span className="text-xs text-zinc-400 dark:text-zinc-500 border border-zinc-200 dark:border-zinc-800 rounded-full px-3 py-1">Click to replace</span>
             </>
           ) : (
             <>
